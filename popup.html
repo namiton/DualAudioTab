@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>DualAudioTab</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="head">
+    <div class="tab-info">
+      <span id="led" class="led"></span>
+      <span id="tabTitle" class="tab-title">—</span>
+    </div>
+    <button id="startStop" class="primary">開始</button>
+  </header>
+
+  <p id="notice" class="notice" hidden></p>
+
+  <div class="output" data-out="A"></div>
+  <div class="output" data-out="B"></div>
+
+  <div class="sync">
+    <label class="check">
+      <input id="autoComp" type="checkbox">
+      <span>A/B の遅延差を自動で揃える</span>
+    </label>
+    <p class="hint">ずれが残る機器（Bluetooth 等）は DLY で手動調整。</p>
+  </div>
+
+  <footer class="statusbar">
+    <span id="statusText">IDLE</span>
+    <button id="permission" class="text-btn" hidden>デバイス名を表示</button>
+  </footer>
+
+  <template id="outputTemplate">
+    <div class="ch-head">
+      <span class="ch-badge"></span>
+      <select class="device" title="出力デバイス"></select>
+      <button class="mute" type="button" title="ミュート" aria-pressed="false">M</button>
+    </div>
+    <div class="meter">
+      <div class="meter-bar"><div class="meter-fill"></div></div>
+      <div class="meter-scale">
+        <span>-60</span><span>-40</span><span>-20</span><span>-10</span><span>-3</span><span>0</span>
+      </div>
+    </div>
+    <label class="param">
+      <span class="param-key">VOL</span>
+      <input class="volume" type="range" min="0" max="150" step="1">
+      <output class="param-val volumeVal"></output>
+    </label>
+    <label class="param">
+      <span class="param-key">DLY</span>
+      <input class="delay" type="range" min="0" max="500" step="1">
+      <output class="param-val delayVal"></output>
+    </label>
+    <div class="ch-foot"><span class="latency"></span></div>
+    <p class="error"></p>
+  </template>
+
+  <script src="settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

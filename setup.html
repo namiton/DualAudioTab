@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>DualAudioTab — デバイスの許可</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="setup">
+  <h1>出力デバイスの許可</h1>
+  <p>
+    Chrome では、拡張機能が既定以外の出力デバイスを選ぶのに「マイク」の許可が必要。
+    下のボタンを押し、表示される確認で「許可」を選ぶ。
+  </p>
+  <p class="hint">マイクの音は使わない（許可を得た直後に停止する）。</p>
+  <button id="grant" class="primary">許可する</button>
+  <p id="result" class="notice" hidden></p>
+  <script src="setup.js"></script>
+</body>
+</html>
