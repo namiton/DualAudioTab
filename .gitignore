@@ -1,4 +1,5 @@
 *.zip
+release/
 *.crx
 *.pem
 .DS_Store
