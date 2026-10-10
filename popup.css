@@ -139,11 +139,24 @@ button:disabled { opacity: 0.4; cursor: default; }
 
 .param {
   display: grid;
-  grid-template-columns: 30px 1fr 64px;
+  grid-template-columns: 30px 18px 1fr 18px 56px;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   height: 24px;
 }
+.nudge {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  color: var(--text-dim);
+  font: 12px/1 var(--mono);
+}
+.nudge:hover { color: var(--accent); border-color: var(--accent); }
+.nudge:active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .param-key { font: 10px var(--mono); letter-spacing: 0.08em; color: var(--text-dim); }
 .param-val { font: 11px var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
 

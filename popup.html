@@ -24,7 +24,6 @@
       <input id="autoComp" type="checkbox">
       <span>A/B の遅延差を自動で揃える</span>
     </label>
-    <p class="hint">ずれが残る機器（Bluetooth 等）は DLY で手動調整。</p>
   </div>
 
   <footer class="statusbar">
@@ -44,16 +43,20 @@
         <span>-60</span><span>-40</span><span>-20</span><span>-10</span><span>-3</span><span>0</span>
       </div>
     </div>
-    <label class="param">
+    <div class="param">
       <span class="param-key">VOL</span>
-      <input class="volume" type="range" min="0" max="150" step="1">
+      <button class="nudge" type="button" data-for="volume" data-step="-1" aria-label="音量を下げる">−</button>
+      <input class="volume" type="range" min="0" max="150" step="1" aria-label="音量">
+      <button class="nudge" type="button" data-for="volume" data-step="1" aria-label="音量を上げる">+</button>
       <output class="param-val volumeVal"></output>
-    </label>
-    <label class="param">
+    </div>
+    <div class="param">
       <span class="param-key">DLY</span>
-      <input class="delay" type="range" min="0" max="500" step="1">
+      <button class="nudge" type="button" data-for="delay" data-step="-1" aria-label="遅延を減らす">−</button>
+      <input class="delay" type="range" min="0" max="500" step="1" aria-label="追加遅延">
+      <button class="nudge" type="button" data-for="delay" data-step="1" aria-label="遅延を増やす">+</button>
       <output class="param-val delayVal"></output>
-    </label>
+    </div>
     <div class="ch-foot"><span class="latency"></span></div>
     <p class="error"></p>
   </template>

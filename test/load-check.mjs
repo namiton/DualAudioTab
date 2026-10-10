@@ -82,6 +82,41 @@ try {
     returnByValue: true,
   }, sessionId);
   console.log('LOAD popup state:', state.result.result.value);
+  // +/- ボタン: 実マウス操作で 1 回押し・長押し・下限での − を確認
+  const valueOf = async (sel) => (await send('Runtime.evaluate', {
+    expression: `document.querySelector('.output[data-out="A"] ${sel}').value`, returnByValue: true,
+  }, sessionId)).result.result.value;
+  const press = async (sel, holdMs) => {
+    const r = (await send('Runtime.evaluate', {
+      expression: `(() => { const b = document.querySelector('.output[data-out="A"] ${sel}').getBoundingClientRect();
+        return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; })()`, returnByValue: true,
+    }, sessionId)).result.result.value;
+    const base = { x: r.x, y: r.y, button: 'left', clickCount: 1 };
+    await send('Input.dispatchMouseEvent', { type: 'mousePressed', ...base }, sessionId);
+    await sleep(holdMs);
+    await send('Input.dispatchMouseEvent', { type: 'mouseReleased', ...base }, sessionId);
+    await sleep(200);
+  };
+  const check = (label, ok, detail) => console.log(`LOAD nudge ${ok ? 'PASS' : 'FAIL'} ${label}: ${detail}`);
+  const vol0 = Number(await valueOf('.volume'));
+  await press('.nudge[data-for="volume"][data-step="1"]', 50);
+  const vol1 = Number(await valueOf('.volume'));
+  check('VOL + once', vol1 === vol0 + 1, `${vol0} -> ${vol1}`);
+  await press('.nudge[data-for="volume"][data-step="-1"]', 1000);
+  const vol2 = Number(await valueOf('.volume'));
+  check('VOL - hold 1s repeats', vol1 - vol2 >= 5, `${vol1} -> ${vol2}`);
+  const label = (await send('Runtime.evaluate', {
+    expression: `document.querySelector('.output[data-out="A"] .volumeVal').textContent`, returnByValue: true,
+  }, sessionId)).result.result.value;
+  check('VOL label follows', label.endsWith('dB'), label);
+  const dly0 = Number(await valueOf('.delay'));
+  await press('.nudge[data-for="delay"][data-step="-1"]', 50);
+  check('DLY - at minimum stays', Number(await valueOf('.delay')) === Math.max(0, dly0 - 1), `${dly0} -> ${await valueOf('.delay')}`);
+  await press('.nudge[data-for="delay"][data-step="1"]', 50);
+  const saved = (await send('Runtime.evaluate', {
+    expression: `chrome.storage.local.get('settings').then((s) => JSON.stringify(s.settings?.A))`, awaitPromise: true, returnByValue: true,
+  }, sessionId)).result.result.value;
+  check('settings persisted', saved.includes(`"delayMs":${Math.max(0, dly0 - 1) + 1}`), saved);
   console.log('LOAD popup errors:', JSON.stringify(errors));
   if (shotPath) {
     await send('Emulation.setDeviceMetricsOverride', { width: 320, height: 600, deviceScaleFactor: 1, mobile: false }, sessionId);

@@ -26,6 +26,41 @@ async function persist() {
   if (capturedTabId != null) await toOffscreen('settings', { settings });
 }
 
+const NUDGE_REPEAT_DELAY_MS = 400;
+const NUDGE_REPEAT_INTERVAL_MS = 60;
+
+// +/- ボタン: スライダーを 1 ステップ動かし、既存の input ハンドラで反映。長押しで連続
+function bindNudge(btn, input) {
+  const step = Number(btn.dataset.step);
+  let timer = null;
+  const apply = () => {
+    const before = input.value;
+    input.value = Number(input.value) + step;
+    if (input.value !== before) input.dispatchEvent(new Event('input'));
+  };
+  const stopRepeat = () => {
+    clearTimeout(timer);
+    timer = null;
+  };
+  btn.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    btn.setPointerCapture(e.pointerId);
+    apply();
+    const repeat = (delay) => {
+      timer = setTimeout(() => {
+        apply();
+        repeat(NUDGE_REPEAT_INTERVAL_MS);
+      }, delay);
+    };
+    repeat(NUDGE_REPEAT_DELAY_MS);
+  });
+  for (const ev of ['pointerup', 'pointercancel', 'lostpointercapture']) btn.addEventListener(ev, stopRepeat);
+  // キーボード操作（Enter / Space）は click のみ発生する（detail === 0）
+  btn.addEventListener('click', (e) => {
+    if (e.detail === 0) apply();
+  });
+}
+
 function buildOutputView(name) {
   const section = document.querySelector(`.output[data-out="${name}"]`);
   section.appendChild($('outputTemplate').content.cloneNode(true));
@@ -77,6 +112,7 @@ function buildOutputView(name) {
     render();
     persist();
   });
+  section.querySelectorAll('.nudge').forEach((btn) => bindNudge(btn, v[btn.dataset.for]));
   v.mute.addEventListener('click', () => {
     s().muted = !s().muted;
     render();
