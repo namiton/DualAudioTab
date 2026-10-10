@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 // offscreen の生成・破棄、取り込み中タブのバッジ表示、タブ終了時の後始末
 'use strict';
 

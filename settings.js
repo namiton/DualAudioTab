@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 // 設定の既定値と保存（popup / background 共通）
 'use strict';
 

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 // 使い捨てプロファイルの Chrome に拡張を読み込み、ポップアップ画面の表示とエラーを確認する
 // 実行: node test/load-check.mjs <使い捨てプロファイルのパス> [スクリーンショット保存先.png]
 // Chrome 137 以降は --load-extension が無効のため、CDP（pipe）の Extensions.loadUnpacked を使う

@@ -61,6 +61,6 @@ node test/capture-check.mjs <使い捨てプロファイルのパス>
 
 ## ライセンス
 
-Copyright (C) 2026 namiton
+Copyright (c) 2026 Namiton
 
-[GNU General Public License v3.0](LICENSE)。改変・再配布する場合は、同じライセンスでソースコードを公開する必要がある。
+[GNU General Public License v3.0](LICENSE)（GPL-3.0-only）。改変・再配布する場合は、同じライセンスでソースコードを公開する必要がある。

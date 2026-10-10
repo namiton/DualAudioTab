@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 // 1 つの MediaStream を出力デバイスごとの AudioContext へ流す（DualAudioBrowser の audio.js から移植）
 'use strict';
 

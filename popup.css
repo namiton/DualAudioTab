@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2026 Namiton
+ * SPDX-License-Identifier: GPL-3.0-only
+ */
 /* DualAudioBrowser の出力パネルと同じチャンネルストリップ調 */
 :root {
   --bg: #0f0f10;

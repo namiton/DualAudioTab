@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 // タブ音声の取り込みと A/B 出力。offscreen では chrome.runtime しか使えないため設定はメッセージで受け取る
 'use strict';
 

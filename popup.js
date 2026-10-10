@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 'use strict';
 
 const $ = (id) => document.getElementById(id);

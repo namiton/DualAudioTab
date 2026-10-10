@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Namiton
+// SPDX-License-Identifier: GPL-3.0-only
 // 取り込み〜A/B 出力の診断: テストトーンのタブを取り込み、offscreen の状態を調べる
 // 実行: node test/capture-check.mjs <使い捨てプロファイルのパス>
 // アイコン操作の代わりに、拡張ページから getMediaStreamId を試みる（失敗した場合はエラー内容を出す）
