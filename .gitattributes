@@ -1,0 +1,2 @@
+# 配布 zip に入る利用者向けテキストは Windows のメモ帳向けに CRLF
+README.txt text eol=crlf
