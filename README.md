@@ -42,6 +42,7 @@ Chrome 116 以降が必要。
 | `offscreen` | ポップアップを閉じても再生を続けるための非表示ページ |
 | `storage` | 出力デバイス・音量・遅延の設定保存 |
 | `activeTab` | ポップアップにタブ名を表示 |
+| `tabGroups` | 取り込み中のタブを黄色のタブグループ「DualAudio」に入れて目印にする |
 
 ## 仕組み
 
@@ -54,7 +55,12 @@ Chrome 116 以降が必要。
 ```bash
 node test/load-check.mjs <使い捨てプロファイルのパス> [screenshot.png]
 node test/capture-check.mjs <使い捨てプロファイルのパス>
+node test/marker-check.mjs <使い捨てプロファイルのパス>
+node test/latency-watch.mjs <使い捨てプロファイルのパス> [秒数] [B デバイス名の一部]
 ```
+
+- `marker-check`: 取り込み中タブの目印（バッジ・黄色のタブグループ）の付け外し
+- `latency-watch`: A/B に合成音を流し、報告遅延の揺れで自動補正値が動かないこと（音程の揺れ防止）
 
 使い捨てプロファイルの Chrome に拡張を読み込み、service worker 起動・ポップアップ表示・開始命令の伝達・出力処理を確認する。
 取り込み開始そのものはアイコン操作が必須のため自動化していない。

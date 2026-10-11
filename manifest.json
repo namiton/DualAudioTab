@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
   "name": "DualAudioTab",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "タブの音を 2 つの出力デバイスへ同時に鳴らす",
   "minimum_chrome_version": "116",
-  "permissions": ["tabCapture", "offscreen", "storage", "activeTab"],
+  "permissions": ["tabCapture", "offscreen", "storage", "activeTab", "tabGroups"],
   "background": { "service_worker": "background.js" },
   "action": {
     "default_title": "DualAudioTab",

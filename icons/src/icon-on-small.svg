@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Copyright (c) 2026 Namiton | SPDX-License-Identifier: GPL-3.0-only -->
+  <!-- 取り込み中の点灯アイコン（16/32px）。通常版と同じ形で、地をアンバー・線を黒に反転 -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="5" fill="#e3a33b" stroke="#f3c56f"/>
+  <g fill="none" stroke="#0f0f10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 16H12"/>
+    <path d="M12 16 17 10H20"/>
+    <path d="M12 16 17 22H20"/>
+  </g>
+  <rect x="20" y="6" width="7" height="8" rx="1" fill="#0f0f10"/>
+  <rect x="20" y="18" width="7" height="8" rx="1" fill="#0f0f10"/>
+</svg>

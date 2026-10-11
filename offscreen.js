@@ -57,7 +57,8 @@ function status() {
   };
 }
 
-setInterval(() => updateCompensation(outputs, autoComp), 1000);
+// 出力を開いた直後の遅延計測（10 回 × 200ms）。計測後は補正値を変えない
+setInterval(() => updateCompensation(outputs, autoComp), 200);
 
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   if (msg.target !== 'offscreen') return false;

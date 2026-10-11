@@ -5,6 +5,8 @@
 
 const OUTPUT_OFF = 'off';
 const MAX_DELAY_SEC = 1.0;
+// 補正に使う遅延の計測回数。報告値は一時的に 10ms 程度跳ねるため中央値で確定させる
+const LATENCY_SAMPLE_COUNT = 10;
 
 class AudioOutput {
   constructor(name) {
@@ -18,6 +20,20 @@ class AudioOutput {
     this.nodes = null;
     this.stream = null;
     this.error = '';
+    this.latencySamples = [];
+  }
+
+  // 出力を開いた直後の報告遅延を計測回数分だけ記録する
+  sampleLatency() {
+    const l = this.reportedLatencyMs;
+    if (l != null && this.latencySamples.length < LATENCY_SAMPLE_COUNT) this.latencySamples.push(l);
+  }
+
+  // 計測完了後の遅延（中央値）。計測中は null
+  get settledLatencyMs() {
+    if (this.latencySamples.length < LATENCY_SAMPLE_COUNT) return null;
+    const sorted = [...this.latencySamples].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)];
   }
 
   get active() {
@@ -43,6 +59,7 @@ class AudioOutput {
 
   async rebuild() {
     await this.close();
+    this.latencySamples = [];
     if (this.deviceId === OUTPUT_OFF || !this.stream) return;
     try {
       // sinkId '' は既定のデバイス
@@ -119,12 +136,15 @@ class AudioOutput {
   }
 }
 
-// 報告遅延の差を DelayNode で揃える
+// 報告遅延の差を DelayNode で揃える。補正値は出力を開いた直後の計測（中央値）で一度だけ決める。
+// 再生中に DelayNode を動かすと音程が揺れるため、報告値の一時的な跳ねには追従しない
 function updateCompensation(outputs, autoComp) {
   const active = outputs.filter((o) => o.active);
-  const maxLat = Math.max(0, ...active.map((o) => o.reportedLatencyMs));
+  active.forEach((o) => o.sampleLatency());
+  if (active.some((o) => o.settledLatencyMs == null)) return;
+  const maxLat = Math.max(0, ...active.map((o) => o.settledLatencyMs));
   for (const out of outputs) {
-    const l = out.reportedLatencyMs;
+    const l = out.active ? out.settledLatencyMs : null;
     out.setCompDelay(autoComp && l != null && active.length > 1 ? maxLat - l : 0);
   }
 }
